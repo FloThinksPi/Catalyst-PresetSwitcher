@@ -1,0 +1,54 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="30dp" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/usrname"
+            style="@style/textview_style"
+            android:text="IP:" />
+
+        <EditText
+            android:id="@+id/input_IP"
+            style="@style/edittext_style"
+            android:hint="Enter IP Adress"
+            android:inputType="textEmailAddress" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/shutBt"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/button"
+            android:onClick="onClick_shutdown"
+            android:text="Connect" />
+
+        <Button
+            android:id="@+id/shutBt"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/button"
+            android:text="Disconnect"
+            android:onClick="onClick_clear" />
+    </LinearLayout>
+
+</LinearLayout><!-- From: file:/D:/Developing/Git%20Repos/CCCRPC/app/src/main/res/layout/activity_main.xml -->
