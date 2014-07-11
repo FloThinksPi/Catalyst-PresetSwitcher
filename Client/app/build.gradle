@@ -5,7 +5,7 @@ android {
     buildToolsVersion "20.0.0"
 
     defaultConfig {
-        applicationId "com.example.shut_client"
+        applicationId "com.flo.cccrpc"
         minSdkVersion 16
         targetSdkVersion 20
     }
@@ -20,4 +20,6 @@ android {
 
 dependencies {
     compile 'com.android.support:support-v4:20.0.0'
+    compile fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+    compile files('D:/Developing/Git Repos/CCCRP/Client/libs/androidasync-1.2.9.jar')
 }

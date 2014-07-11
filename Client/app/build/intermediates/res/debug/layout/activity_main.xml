@@ -2,7 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="30dp" >
+    android:paddingTop="30dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,27 +28,40 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:weightSum="1">
 
         <Button
             android:id="@+id/shutBt"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="30dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="0dp"
             android:background="@drawable/button"
-            android:onClick="onClick_shutdown"
-            android:text="Connect" />
-
-        <Button
-            android:id="@+id/shutBt"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/button"
-            android:text="Disconnect"
-            android:onClick="onClick_clear" />
+            android:onClick="onClick_connect"
+            android:text="Connect"
+            android:layout_gravity="right"
+            android:textAlignment="gravity"
+            android:layout_weight="0.55"
+            android:gravity="center_vertical|center_horizontal" />
     </LinearLayout>
 
-</LinearLayout><!-- From: file:/D:/Developing/Git%20Repos/CCCRPC/app/src/main/res/layout/activity_main.xml -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_vertical|center_horizontal"
+        android:paddingTop="30dp">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Auto Connect"
+            android:id="@+id/checkBox"
+            android:layout_gravity="center_horizontal"
+            android:clickable="true"
+            android:enabled="true" />
+    </LinearLayout>
+
+
+</LinearLayout><!-- From: file:/D:/Developing/Git%20Repos/CCCRP/Client/app/src/main/res/layout/activity_main.xml -->

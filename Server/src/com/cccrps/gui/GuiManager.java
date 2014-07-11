@@ -19,6 +19,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.prefs.Preferences;
 
 import javax.swing.ImageIcon;
@@ -52,9 +54,10 @@ public class GuiManager {
 	/**
 	 * Initialize the contents of the frame.
 	 * @throws FileNotFoundException 
+	 * @throws UnknownHostException 
 	 * @wbp.parser.entryPoint
 	 */
-	public void initialize() throws FileNotFoundException {
+	public void initialize() throws FileNotFoundException, UnknownHostException {
 		
 
 		
@@ -65,30 +68,6 @@ public class GuiManager {
 			
             public void windowOpened(WindowEvent e){
             	
-            /*	File theDir = new File(System.getenv("userprofile") + "/" + "Documents/CCCRPS");
-            	try {
-					ServerDataManager.createIfNotExisting(theDir,"folder");
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} 
-            	
-            	File thefile = new File(System.getenv("userprofile") + "/" + "Documents/CCCRPS/settings.conf");
-            	try {
-					ServerDataManager.createIfNotExisting(thefile,"file");
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} 
-            	
-            	
-            	File settings = new File(System.getenv("userprofile") + "/" + "Documents/CCCRPS/settings.conf");
-            	try {
-					ServerDataManager.ReadFileByLine(settings,1);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}*/
             	
             	final Preferences prefs;
             	prefs = Preferences.userNodeForPackage(this.getClass());
@@ -184,6 +163,11 @@ public class GuiManager {
     	});
     	btnStartOnWindows.setBounds(10, 13, 212, 43);
     	desktopPane.add(btnStartOnWindows);
+    	
+    	JLabel lblIp = new JLabel("IP:     "+InetAddress.getLocalHost().getHostAddress());
+    	lblIp.setHorizontalAlignment(SwingConstants.CENTER);
+    	lblIp.setBounds(12, 119, 210, 16);
+    	desktopPane.add(lblIp);
 		
 		frmCccrps.addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override
