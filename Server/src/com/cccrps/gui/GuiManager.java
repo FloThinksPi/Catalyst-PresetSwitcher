@@ -62,7 +62,7 @@ public class GuiManager {
 
 		
 		frmCccrps = new JFrame();
-		Image icon = new ImageIcon(getClass().getResource("icon.png")).getImage();
+		Image icon = new ImageIcon(this.getClass().getResource("/images/icon.png")).getImage();
 		frmCccrps.setIconImage(icon);
 		frmCccrps.addWindowListener(new WindowAdapter() {
 			
@@ -189,7 +189,7 @@ public void displayTrayIcon(){
     final TrayIcon trayIcon;
     if (SystemTray.isSupported()) {
         final SystemTray tray = SystemTray.getSystemTray(); 
-        Image image = Toolkit.getDefaultToolkit().getImage(getClass().getResource("icon.gif"));
+        Image image = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/images/icon.gif"));
        
         PopupMenu popup = new PopupMenu();
         trayIcon = new TrayIcon(image, "CCCRPS", popup);    
