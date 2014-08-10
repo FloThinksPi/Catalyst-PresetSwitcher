@@ -27,9 +27,9 @@ public class Main
 			if(dialogResult == JOptionPane.YES_OPTION){
 				String path = Main.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 				String decodedPath = URLDecoder.decode(path, "UTF-8");
-				
-				//SimpleUpdater.update(new URL("https://flothinkspi.github.io/Catalyst-PresetSwitcher/download/CRPServer.jar"),new File(decodedPath+"/CRPServer.jar") , "");
-				//System.exit(0); 
+				System.out.println(decodedPath);
+				SimpleUpdater.update(new URL("https://flothinkspi.github.io/Catalyst-PresetSwitcher/download/CRPServer.jar"),new File(decodedPath) , "");
+				System.exit(0); 
 			}
 		}
 			
