@@ -18,8 +18,16 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.net.InetAddress;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 import java.util.prefs.Preferences;
 
@@ -29,8 +37,11 @@ import javax.swing.JCheckBox;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+
+import com.cccrps.main.Main;
 
 
 public class GuiManager {
@@ -133,7 +144,7 @@ public class GuiManager {
 		});
 
 		chckbxStartMinimized.setHorizontalAlignment(SwingConstants.CENTER);
-		chckbxStartMinimized.setBounds(10, 65, 212, 25);
+		chckbxStartMinimized.setBounds(10, 80, 212, 25);
 		desktopPane.add(chckbxStartMinimized);
 		
 		    	
@@ -154,20 +165,89 @@ public class GuiManager {
     	btnCloseServer.setBounds(10, 177, 212, 23);
     	desktopPane.add(btnCloseServer);
     	
-    	JButton btnStartOnWindows = new JButton("Launch on Windows Startup");
+    	JButton btnStartOnWindows = new JButton("Instructions & Website");
     	btnStartOnWindows.setForeground(new Color(255, 0, 0));
     	btnStartOnWindows.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent arg0) {
-    			AutostartDialog.main();
+    			try {
+					java.awt.Desktop.getDesktop().browse(new URI("http://flothinkspi.github.io/Catalyst-PresetSwitcher/"));
+				} catch (IOException | URISyntaxException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
     		}
     	});
-    	btnStartOnWindows.setBounds(10, 13, 212, 43);
+    	btnStartOnWindows.setBounds(10, 28, 212, 43);
     	desktopPane.add(btnStartOnWindows);
     	
     	JLabel lblIp = new JLabel("IP:     "+InetAddress.getLocalHost().getHostAddress());
     	lblIp.setHorizontalAlignment(SwingConstants.CENTER);
-    	lblIp.setBounds(12, 119, 210, 16);
+    	lblIp.setBounds(10, 148, 210, 16);
     	desktopPane.add(lblIp);
+    	
+    	final JCheckBox checkBoxAutoStart = new JCheckBox("Autostart");
+    	checkBoxAutoStart.addMouseListener(new MouseAdapter() {
+    		@Override
+    		public void mouseReleased(MouseEvent e) {
+    			if(checkBoxAutoStart.isSelected()){
+    			JOptionPane.showMessageDialog(null,"!Warning, if ServerFile gets moved , Autostart has to get applied again!");
+    			}
+    		}
+    	});
+    	
+    	checkBoxAutoStart.addItemListener(new ItemListener() {
+    		public void itemStateChanged(ItemEvent arg0) {
+    			
+    			
+    			
+    			prefs.put("autostart", String.valueOf(checkBoxAutoStart.isSelected()));
+    			String targetpath = "C:\\Users\\"+System.getProperty("user.name")+"\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\CRPServerAutostarter.bat";
+			    if(checkBoxAutoStart.isSelected()){
+    				Writer writer = null;
+    				try {
+    					writer = new BufferedWriter(new OutputStreamWriter(
+    				          new FileOutputStream(targetpath), "utf-8"));
+    					File f = new File(System.getProperty("java.class.path"));
+    					File dir = f.getAbsoluteFile().getParentFile();
+    					String path = dir.toString();
+    				    writer.write("start /min javaw -jar \""+path+"\\"+f.getName()+"\"");
+    				} catch (IOException ex) {
+    				  // report
+    				} finally {
+    				   try {writer.close();} catch (Exception ex) {}
+    				   
+    				}
+    				
+    			}else{
+    				try{
+    					 
+    		    		File file = new File(targetpath);
+    		 
+    		    		file.delete();
+    		 
+    		    	}catch(Exception e){
+    		 
+    		    		e.printStackTrace();
+    		 
+    		    	}
+    			}
+    		}
+    	});
+    	if(Boolean.parseBoolean(prefs.get("autostart", ""))){
+    		checkBoxAutoStart.setSelected(true);
+    	}else{
+    		checkBoxAutoStart.setSelected(false);
+    	}
+    	    	
+    	checkBoxAutoStart.setHorizontalAlignment(SwingConstants.CENTER);
+    	checkBoxAutoStart.setBounds(10, 110, 212, 25);
+    	desktopPane.add(checkBoxAutoStart);
+    	
+    	JLabel lblVersion = new JLabel("Version Undefined");
+    	lblVersion.setHorizontalAlignment(SwingConstants.CENTER);
+    	lblVersion.setBounds(41, 0, 154, 16);
+    	lblVersion.setText("Version: "+Main.getVersion());
+    	desktopPane.add(lblVersion);
 		
 		frmCccrps.addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override

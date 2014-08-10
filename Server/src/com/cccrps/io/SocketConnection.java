@@ -9,6 +9,8 @@ import java.net.Socket;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.cccrps.main.Main;
+
 public class SocketConnection extends Thread{
 
 	private Socket client = null;
@@ -65,7 +67,7 @@ public class SocketConnection extends Thread{
 				
 				System.out.println("PA: Connecting Done.");
 				
-				sendMessage("CCCRPS0001");
+				sendMessage("CCCRPS"+Main.getVersion());
 				
 				while (running)
 				{

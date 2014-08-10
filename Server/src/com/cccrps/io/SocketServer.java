@@ -4,11 +4,15 @@ import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.IOFileFilter;
+
+
 
 
 
@@ -59,10 +63,10 @@ public class SocketServer
 							    String RootPath = "C:\\Users\\"+System.getProperty("user.name")+"\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\AMD Catalyst Control Center\\";
 							    Collection files = FileUtils.listFiles(new File(RootPath), null, recursive);
 							    String fileName = message;
-							    System.out.println(RootPath+fileName);
+							    System.out.println(RootPath+fileName+".lnk");
 							    for (Iterator iterator = files.iterator(); iterator.hasNext();) {
 							        File file = (File) iterator.next();
-							        if (file.getName().equals(fileName)){
+							        if (file.getName().equals(fileName+".lnk")){
 							        	System.out.println(file.getAbsolutePath());
 							        	ProcessBuilder pb = new ProcessBuilder("cmd", "/c", file.getAbsolutePath());						        	
 							        	Process process = pb.start();	        	
@@ -82,15 +86,21 @@ public class SocketServer
 							
 							try {
 							String RootPath = "C:\\Users\\"+System.getProperty("user.name")+"\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\AMD Catalyst Control Center";
-						    Collection files = FileUtils.listFiles(new File(RootPath), null, recursive);
-						    for (Iterator iterator = files.iterator(); iterator.hasNext();) {
-						        File file = (File) iterator.next();
-						        if (true){
-						        	System.out.println(file.getAbsolutePath());
-						        	client.sendMessage(file.getName());        	
-						        }
-
-						    }
+						    Iterator files = FileUtils.iterateFiles(new File(RootPath), null, recursive);
+						    List<String> fl = new ArrayList<String>();
+					        while(files.hasNext()){
+					        	File file = (File) files.next();
+					        	if(fl.contains(file.getName())){
+					        		System.out.println("Double Warning");
+					        	}
+					        	else{
+					        		fl.add(file.getName());
+					        		
+					        		client.sendMessage(file.getName().substring(0,file.getName().length()-4));
+					        	}
+					            
+					        }
+						    
 						} catch (Exception e) {
 						    e.printStackTrace();
 						}
