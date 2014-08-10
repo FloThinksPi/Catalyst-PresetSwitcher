@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.net.URLDecoder;
 
 import javax.swing.JOptionPane;
 
@@ -24,7 +25,11 @@ public class Main
 		if(Integer.parseInt(IOUtils.toString(new URL("https://flothinkspi.github.io/Catalyst-PresetSwitcher/version.json")).replace("\n", "").replace("\r", ""))>Integer.parseInt(Version)){
 			int dialogResult = JOptionPane.showConfirmDialog (null, "Do you want to update the CatalystPresetSwitcher now?","CPS Update Available",JOptionPane.YES_NO_OPTION);
 			if(dialogResult == JOptionPane.YES_OPTION){
-				SimpleUpdater.update(new URL("https://flothinkspi.github.io/Catalyst-PresetSwitcher/download/CRPServer.jar"),new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath()+"\\CRPServer.jar") , "");
+				String path = Main.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+				String decodedPath = URLDecoder.decode(path, "UTF-8");
+				
+				//SimpleUpdater.update(new URL("https://flothinkspi.github.io/Catalyst-PresetSwitcher/download/CRPServer.jar"),new File(decodedPath+"/CRPServer.jar") , "");
+				//System.exit(0); 
 			}
 		}
 			
