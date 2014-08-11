@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">CCCRemotePresetClient</string>
+    <string name="app_name">CRP Client</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
-    <string name="NeedetServerVersion">0002</string>
+    <string name="NeedetServerVersion">0005</string>
 
 </resources>

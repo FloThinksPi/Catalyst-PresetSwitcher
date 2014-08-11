@@ -28,6 +28,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
                     .add(R.id.container, new ConnectFragment())
@@ -136,7 +137,7 @@ public class MainActivity extends Activity {
 
             if(recordInput)
             {
-                Presets.add(new PresetData(values[0],new CharacterDrawable(values[0].substring(0,1).charAt(0), 0xFF805781)));
+                Presets.add(new PresetData(values[0],new CharacterDrawable(values[0].substring(0,1).charAt(0), 0xFF607d8b)));
             }
 
 
@@ -156,6 +157,106 @@ public class MainActivity extends Activity {
         }
 
 
+    }
+
+    private int getColourByChar(Character Char) {
+        int SqareColour;
+
+        //Colours
+        int SqareBlue=0xFF5677fc;
+        int SqareGreen=0xFF607d8b;
+        int SqareYellow=0xFFffc107;
+        int SqarePurple=0xFF9c27b0;
+        int SqareRed=0xFF607d8b;
+        int SqareOrange=0xFFff9800;
+        int SqareBrown=0xFF795548;
+        int SqareCyan=0xFF9e9e9e;
+
+        switch (Char) {
+            case 'A':
+                SqareColour = SqareBlue;
+                break;
+            case 'B':
+                SqareColour = SqareGreen;
+                break;
+            case 'C':
+                SqareColour = SqareYellow;
+                break;
+            case 'D':
+                SqareColour = SqarePurple;
+                break;
+            case 'E':
+                SqareColour = SqareRed;
+                break;
+            case 'F':
+                SqareColour = SqareOrange;
+                break;
+            case 'G':
+                SqareColour = SqareBrown;
+                break;
+            case 'H':
+                SqareColour = SqareCyan;
+                break;
+            case 'I':
+                SqareColour = SqareBlue;
+                break;
+            case 'J':
+                SqareColour = SqareGreen;
+                break;
+            case 'K':
+                SqareColour = SqareYellow;
+                break;
+            case 'L':
+                SqareColour = SqarePurple;
+                break;
+            case 'M':
+                SqareColour = SqareRed;
+                break;
+            case 'N':
+                SqareColour = SqareOrange;
+                break;
+            case 'O':
+                SqareColour = SqareBrown;
+                break;
+            case 'P':
+                SqareColour = SqareCyan;
+                break;
+            case 'Q':
+                SqareColour = SqareBlue;
+                break;
+            case 'R':
+                SqareColour = SqareGreen;
+                break;
+            case 'S':
+                SqareColour = SqareYellow;
+                break;
+            case 'T':
+                SqareColour = SqarePurple;
+                break;
+            case 'U':
+                SqareColour = SqareRed;
+                break;
+            case 'V':
+                SqareColour = SqareOrange;
+                break;
+            case 'W':
+                SqareColour = SqareBrown;
+                break;
+            case 'X':
+                SqareColour = SqareCyan;
+                break;
+            case 'Y':
+                SqareColour = SqareBlue;
+                break;
+            case 'Z':
+                SqareColour = SqareGreen;
+                break;
+            default:
+                SqareColour = SqareYellow;
+                break;
+        }
+
+        return SqareColour;
     }
 
     public void stopClient(){
@@ -202,10 +303,10 @@ public class MainActivity extends Activity {
                 int CV = Integer.parseInt(status.split("S")[1]);
                 int NV = Integer.parseInt(getString(R.string.NeedetServerVersion));
                 if(CV>NV){
-                    myFragment.setError("Client is to old , Check Playstore");
+                    myFragment.setError("Client(This App) is to old , Check Playstore");
                     Updatennedet=true;
                 }else {
-                    myFragment.setError("Server Version is to old");
+                    myFragment.setError("Server Version is to old , check for updates");
                     Updatennedet=true;
                 }
             }

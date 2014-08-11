@@ -3,7 +3,9 @@ package cccrpc.flo.com.cccremotepresetclient;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -27,6 +29,7 @@ public class ConnectFragment extends Fragment implements View.OnClickListener{
     public ConnectFragment() {
     }
 
+    Button helpbtn;
     Button mButton;
     EditText mTextView;
     CheckBox mCheckBox;
@@ -41,6 +44,9 @@ public class ConnectFragment extends Fragment implements View.OnClickListener{
 
         mButton = (Button) rootView.findViewById(R.id.connectButton);
         mButton.setOnClickListener(this);
+
+        helpbtn = (Button) rootView.findViewById(R.id.helpbtn);
+        helpbtn.setOnClickListener(this);
 
         mTextView = (EditText) rootView.findViewById(R.id.IPeditText);
         mCheckBox = (CheckBox) rootView.findViewById(R.id.AutoConnectcheckBox);
@@ -90,8 +96,11 @@ public class ConnectFragment extends Fragment implements View.OnClickListener{
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_Disconnect) {
-            return true;
+        if (id == R.id.action_howto) {
+            String url = "http://goo.gl/dooHnq";
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            startActivity(i);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -116,6 +125,13 @@ public class ConnectFragment extends Fragment implements View.OnClickListener{
 
 
         }
+       if(v == helpbtn){
+
+           String url = "http://goo.gl/dooHnq";
+           Intent i = new Intent(Intent.ACTION_VIEW);
+           i.setData(Uri.parse(url));
+           startActivity(i);
+       }
     }
 
 
