@@ -17,7 +17,7 @@ import com.cccrps.io.SocketServer;
 public class Main
 {
 	static SocketServer mServer;
-	static String Version="0004";
+	static String Version="0005";
 	
 	public static void main(String[] args) throws Exception
 	{
@@ -25,7 +25,12 @@ public class Main
 		
 		if(args.length > 0) {
 			if(args[0].contains("updated")) {
-				JOptionPane.showConfirmDialog (null, "Update successful, you are now on Version: "+Main.getVersion(),"CRPServer Updater",JOptionPane.PLAIN_MESSAGE);						
+				JOptionPane.showConfirmDialog (null, "Update successful, you are now on Version: "+Main.getVersion(),"CRPServer Updater",JOptionPane.PLAIN_MESSAGE);	
+	    		
+				String path = Main.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+				String decodedPath = URLDecoder.decode(path.substring(0, path.length()-3)+"sik", "UTF-8");
+				File file = new File(decodedPath);
+	    		file.delete();
 			} 
 		}
 		
@@ -36,7 +41,7 @@ public class Main
 				String path = Main.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 				String decodedPath = URLDecoder.decode(path, "UTF-8");
 				System.out.println(decodedPath);
-				SimpleUpdater.update(new URL("https://flothinkspi.github.io/Catalyst-PresetSwitcher/download/CRPServer.jar"),new File(decodedPath) , "-updated");
+				SimpleUpdater.update(new URL("https://flothinkspi.github.io/Catalyst-PresetSwitcher/download/CRPServer.jar"),new File(decodedPath) , "updated");
 				System.exit(0); 
 			}
 		}

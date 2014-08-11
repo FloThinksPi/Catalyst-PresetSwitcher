@@ -76,6 +76,7 @@ public class GuiManager {
 	 * @throws UnknownHostException 
 	 * @wbp.parser.entryPoint
 	 */
+	
 	public void initialize() throws FileNotFoundException, UnknownHostException {
 		
 
@@ -156,6 +157,7 @@ public class GuiManager {
     	System.out.println(isminimized);
     	if(isminimized){
     		System.out.println("Minimizing");
+    		chckbxStartMinimized.setSelected(true);
     		frmCccrps.setExtendedState(Frame.ICONIFIED);
     	}
     	
@@ -173,7 +175,7 @@ public class GuiManager {
     	btnStartOnWindows.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent arg0) {
     			try {
-					java.awt.Desktop.getDesktop().browse(new URI("http://flothinkspi.github.io/Catalyst-PresetSwitcher/"));
+					java.awt.Desktop.getDesktop().browse(new URI("goo.gl/uihUNy"));
 				} catch (IOException | URISyntaxException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -265,7 +267,7 @@ public class GuiManager {
 							String path = Main.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 							String decodedPath = URLDecoder.decode(path, "UTF-8");
 							System.out.println(decodedPath);
-							SimpleUpdater.update(new URL("https://flothinkspi.github.io/Catalyst-PresetSwitcher/download/CRPServer.jar"),new File(decodedPath) , "-updated");
+							SimpleUpdater.update(new URL("https://flothinkspi.github.io/Catalyst-PresetSwitcher/download/CRPServer.jar"),new File(decodedPath) , "updated");
 							System.exit(0); 
 						}
 					}else{
