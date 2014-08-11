@@ -46,7 +46,7 @@ public class ConnectFragment extends Fragment implements View.OnClickListener{
         mCheckBox = (CheckBox) rootView.findViewById(R.id.AutoConnectcheckBox);
 
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
-        mTextView.setText(prefs.getString("IP","10.110.109.41"));
+        mTextView.setText(prefs.getString("IP",""));
         mCheckBox.setChecked(prefs.getBoolean("Autoconnect",false));
 
         mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

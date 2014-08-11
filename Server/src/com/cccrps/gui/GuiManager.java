@@ -3,6 +3,7 @@ import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Frame;
+import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.MenuItem;
 import java.awt.PopupMenu;
@@ -28,6 +29,8 @@ import java.io.Writer;
 import java.net.InetAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLDecoder;
 import java.net.UnknownHostException;
 import java.util.prefs.Preferences;
 
@@ -41,7 +44,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import org.apache.commons.io.IOUtils;
+
 import com.cccrps.main.Main;
+import com.cccrps.main.SimpleUpdater;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 
 public class GuiManager {
@@ -118,23 +126,19 @@ public class GuiManager {
 		
 		frmCccrps.setResizable(false);
 		frmCccrps.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		frmCccrps.setTitle("CCCRPS");
-		frmCccrps.setBounds(100, 100, 240, 300);
+		frmCccrps.setTitle("CRP");
+		frmCccrps.setBounds(100, 100, 240, 310);
 		
 		
 		JPanel panel = new JPanel();
 		frmCccrps.getContentPane().add(panel, BorderLayout.NORTH);
 		
-		JLabel lblNewLabel = new JLabel("CCC Remote Profile Server");
+		JLabel lblNewLabel = new JLabel("Catalyst Remote Profile Server");
 		panel.add(lblNewLabel);
 		
 		JDesktopPane desktopPane = new JDesktopPane();
 		desktopPane.setBackground(SystemColor.menu);
 		frmCccrps.getContentPane().add(desktopPane, BorderLayout.CENTER);
-		
-		JButton btnAbout = new JButton("About");
-		btnAbout.setBounds(10, 203, 212, 23);
-		desktopPane.add(btnAbout);
 		
 		final JCheckBox chckbxStartMinimized = new JCheckBox("Start Minimized");
 		chckbxStartMinimized.addItemListener(new ItemListener() {
@@ -149,23 +153,22 @@ public class GuiManager {
 		
 		    	
 		boolean isminimized=Boolean.parseBoolean(prefs.get("checkbminimized", ""));
-    	chckbxStartMinimized.setSelected(isminimized);
     	System.out.println(isminimized);
     	if(isminimized){
     		System.out.println("Minimizing");
     		frmCccrps.setExtendedState(Frame.ICONIFIED);
     	}
     	
-    	JButton btnCloseServer = new JButton("Close Server");
+    	JButton btnCloseServer = new JButton("Shutdown Server");
     	btnCloseServer.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent arg0) {
     			System.exit(0);
     		}
     	});
-    	btnCloseServer.setBounds(10, 177, 212, 23);
+    	btnCloseServer.setBounds(10, 177, 212, 30);
     	desktopPane.add(btnCloseServer);
     	
-    	JButton btnStartOnWindows = new JButton("Instructions & Website");
+    	JButton btnStartOnWindows = new JButton("Website(Instructions & About)");
     	btnStartOnWindows.setForeground(new Color(255, 0, 0));
     	btnStartOnWindows.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent arg0) {
@@ -180,7 +183,8 @@ public class GuiManager {
     	btnStartOnWindows.setBounds(10, 28, 212, 43);
     	desktopPane.add(btnStartOnWindows);
     	
-    	JLabel lblIp = new JLabel("IP:     "+InetAddress.getLocalHost().getHostAddress());
+    	JLabel lblIp = new JLabel("");
+    	lblIp.setText("IP:     "+InetAddress.getLocalHost().getHostAddress());
     	lblIp.setHorizontalAlignment(SwingConstants.CENTER);
     	lblIp.setBounds(10, 148, 210, 16);
     	desktopPane.add(lblIp);
@@ -190,7 +194,7 @@ public class GuiManager {
     		@Override
     		public void mouseReleased(MouseEvent e) {
     			if(checkBoxAutoStart.isSelected()){
-    			JOptionPane.showMessageDialog(null,"!Warning, if ServerFile gets moved , Autostart has to get applied again!");
+    			JOptionPane.showMessageDialog(null,"!Warning, if ServerFile(.jar) gets moved , Autostart has to be applied again!");
     			}
     		}
     	});
@@ -248,6 +252,35 @@ public class GuiManager {
     	lblVersion.setBounds(41, 0, 154, 16);
     	lblVersion.setText("Version: "+Main.getVersion());
     	desktopPane.add(lblVersion);
+    	
+    	JButton btnCheckForUpdates = new JButton("Check For Updates");
+    	btnCheckForUpdates.addActionListener(new ActionListener() {
+    		public void actionPerformed(ActionEvent arg0) {
+    			
+    			try {
+    				int NewVersion=Integer.parseInt(IOUtils.toString(new URL("https://flothinkspi.github.io/Catalyst-PresetSwitcher/version.json")).replace("\n", "").replace("\r", ""));
+					if(NewVersion>Integer.parseInt(Main.getVersion())){
+						int dialogResult = JOptionPane.showConfirmDialog (null, "Update found from "+Main.getVersion()+" to "+NewVersion+" ,Update now ?","CRPServer Updater",JOptionPane.YES_NO_OPTION);
+						if(dialogResult == JOptionPane.YES_OPTION){
+							String path = Main.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+							String decodedPath = URLDecoder.decode(path, "UTF-8");
+							System.out.println(decodedPath);
+							SimpleUpdater.update(new URL("https://flothinkspi.github.io/Catalyst-PresetSwitcher/download/CRPServer.jar"),new File(decodedPath) , "-updated");
+							System.exit(0); 
+						}
+					}else{
+						JOptionPane.showConfirmDialog (null, "No Updates , You have the latest CRPServer(Version:"+Main.getVersion()+")","CRPServer Updater",JOptionPane.PLAIN_MESSAGE);
+						}
+				} catch (NumberFormatException | HeadlessException
+						| IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+    			
+    		}
+    	});
+    	btnCheckForUpdates.setBounds(10, 213, 212, 30);
+    	desktopPane.add(btnCheckForUpdates);
 		
 		frmCccrps.addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override

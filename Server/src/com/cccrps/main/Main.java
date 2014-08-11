@@ -17,18 +17,26 @@ import com.cccrps.io.SocketServer;
 public class Main
 {
 	static SocketServer mServer;
-	static String Version="0002";
+	static String Version="0004";
 	
 	public static void main(String[] args) throws Exception
-	{		
+	{
 		
-		if(Integer.parseInt(IOUtils.toString(new URL("https://flothinkspi.github.io/Catalyst-PresetSwitcher/version.json")).replace("\n", "").replace("\r", ""))>Integer.parseInt(Version)){
-			int dialogResult = JOptionPane.showConfirmDialog (null, "Do you want to update the CatalystPresetSwitcher now?","CPS Update Available",JOptionPane.YES_NO_OPTION);
+		
+		if(args.length > 0) {
+			if(args[0].contains("updated")) {
+				JOptionPane.showConfirmDialog (null, "Update successful, you are now on Version: "+Main.getVersion(),"CRPServer Updater",JOptionPane.PLAIN_MESSAGE);						
+			} 
+		}
+		
+		int NewVersion=Integer.parseInt(IOUtils.toString(new URL("https://flothinkspi.github.io/Catalyst-PresetSwitcher/version.json")).replace("\n", "").replace("\r", ""));
+		if(NewVersion>Integer.parseInt(Main.getVersion())){
+			int dialogResult = JOptionPane.showConfirmDialog (null, "Update found from "+Main.getVersion()+" to "+NewVersion+" ,Update now ?","CRPServer Updater",JOptionPane.YES_NO_OPTION);
 			if(dialogResult == JOptionPane.YES_OPTION){
 				String path = Main.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 				String decodedPath = URLDecoder.decode(path, "UTF-8");
 				System.out.println(decodedPath);
-				SimpleUpdater.update(new URL("https://flothinkspi.github.io/Catalyst-PresetSwitcher/download/CRPServer.jar"),new File(decodedPath) , "");
+				SimpleUpdater.update(new URL("https://flothinkspi.github.io/Catalyst-PresetSwitcher/download/CRPServer.jar"),new File(decodedPath) , "-updated");
 				System.exit(0); 
 			}
 		}

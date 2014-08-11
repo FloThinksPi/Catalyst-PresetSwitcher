@@ -88,23 +88,15 @@ public class MainActivity extends Activity {
         @Override
         protected void onPostExecute(Void d) {
 
-            if(ServerOK){
+            if(ServerOK) {
                 ListFragment newFragment = new ListFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.container, newFragment);
                 transaction.commit();
 
                 mDialogFragment.dismiss();
-            }else{
-                ConnectDialogFragment myFragment = (ConnectDialogFragment) getFragmentManager().findFragmentByTag("ConnectDialogFrag");
-                if (myFragment.getDialog() != null) {
-                    myFragment.setUpdateDialog();
-                    mTcpClient.stopClient();
-                }
 
             }
-
-
         }
 
     }
@@ -197,20 +189,35 @@ public class MainActivity extends Activity {
         Log.d("ServerCommand", status);
 
 
+        boolean Updatennedet=false;
         if(status.substring(0, Math.min(status.length(), 6)).matches("CCCRPS"))
         {
-            if(status.split("S")[1].matches("0001")){
+            if(status.split("S")[1].matches(getString(R.string.NeedetServerVersion))){
 
                 ServerOK=true;
                 returnvalue = true;
+
             }else{
                 ServerOK=false;
+                int CV = Integer.parseInt(status.split("S")[1]);
+                int NV = Integer.parseInt(getString(R.string.NeedetServerVersion));
+                if(CV>NV){
+                    myFragment.setError("Client is to old , Check Playstore");
+                    Updatennedet=true;
+                }else {
+                    myFragment.setError("Server Version is to old");
+                    Updatennedet=true;
+                }
             }
+
         }
 
         if (status.matches("ServerError")) {
             if (myFragment != null) {
-                myFragment.setError();
+                if(Updatennedet==false){
+                    myFragment.setError();
+                }
+
 
                 try {
                     mTcpClient.closeConnection();
