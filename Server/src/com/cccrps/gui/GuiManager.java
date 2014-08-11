@@ -175,7 +175,7 @@ public class GuiManager {
     	btnStartOnWindows.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent arg0) {
     			try {
-					java.awt.Desktop.getDesktop().browse(new URI("goo.gl/uihUNy"));
+					java.awt.Desktop.getDesktop().browse(new URI("http://goo.gl/uihUNy"));
 				} catch (IOException | URISyntaxException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
