@@ -1,7 +1,7 @@
-Catalyst Controll Center Remote Preset Switcher
+Obsolete - Catalyst Controll Center Remote Preset Switcher
 ===
 
-Warning: Quick and verry dirty code!
+This is Obsolete as AMD replaced their CCC.
 
 Switch CCC presets with your android phone and a java server running on the target pc.
 
